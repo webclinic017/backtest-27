@@ -1,6 +1,6 @@
 import pandas as pd
 import backtrader as bt
-import pandasquant as pq
+import quool as ql
 from .data import *
 from .indicators import *
 from .strategies import *
@@ -29,7 +29,7 @@ class BackTest:
             cerebro.adddata(d, name=n)
         
         if self.indicators is not None:
-            indicators = pq.item2list(self.indicators)
+            indicators = ql.item2list(self.indicators)
             for i in indicators:
                 cerebro.addindicator(i)
         
@@ -38,21 +38,21 @@ class BackTest:
 
         if self.observers is None:
             observers = [bt.observers.Broker, bt.observers.BuySell, bt.observers.DrawDown]
-        observers = pq.item2list(observers)
+        observers = ql.item2list(observers)
         for ob in observers:
             cerebro.addobserver(ob)
         
         if self.analyzers is None:
-            analyzers = [bt.analyzers.SharpeRatio, bt.analyzers.TimeDrawDown, bt.analyzers.TimeReturn, pq.OrderTable]
-        analyzers = pq.item2list(analyzers)
+            analyzers = [bt.analyzers.SharpeRatio, bt.analyzers.TimeDrawDown, bt.analyzers.TimeReturn, ql.OrderTable]
+        analyzers = ql.item2list(analyzers)
         for an in analyzers:
             cerebro.addanalyzer(an)
         
         result = cerebro.run()
 
         timereturn = pd.Series(result[0].analyzers.timereturn.rets)
-        pq.CONSOLE.print(dict(result[0].analyzers.sharperatio.rets))
-        pq.CONSOLE.print(dict(result[0].analyzers.timedrawdown.rets))
+        ql.CONSOLE.print(dict(result[0].analyzers.sharperatio.rets))
+        ql.CONSOLE.print(dict(result[0].analyzers.timedrawdown.rets))
         cerebro.plot(width=18, height=9, style='candel')
         if image_path is not None:
             plt.savefig(image_path)

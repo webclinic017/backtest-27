@@ -1,9 +1,9 @@
 import numpy as np
 import backtrader as bt
-import pandasquant as pq
+import quool as ql
 
 
-class SMACrossStrategy(pq.Strategy):
+class SMACrossStrategy(ql.Strategy):
     def __init__(self):
         sma5 = bt.indicators.SMA(period=5)
         sma10 = bt.indicators.SMA(period=10)
@@ -18,7 +18,7 @@ class SMACrossStrategy(pq.Strategy):
             self.order_target_percent(target=0)
 
 
-class TurtleStrategy(pq.Strategy):
+class TurtleStrategy(ql.Strategy):
     
     def __init__(self) -> None:
         self.atr = bt.indicators.ATR(period=14)
@@ -57,7 +57,7 @@ class TurtleStrategy(pq.Strategy):
                 self.alreadybuy = False
                 self.currentpos = 0
 
-class BollingStrategy(pq.Strategy):
+class BollingStrategy(ql.Strategy):
     def __init__(self):
         self.bollinger = bt.indicators.BollingerBands(period=20, devfactor=2)
     

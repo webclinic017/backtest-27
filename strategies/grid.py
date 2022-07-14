@@ -1,11 +1,10 @@
-import numpy as np
 import backtrader as bt
-import pandasquant as pq
+import quool as ql
 from ..indicators import *
 
 
 
-class GridStrategy(pq.Strategy):
+class GridStrategy(ql.Strategy):
     params = (('cashnum', 5),)
     
     def __init__(self) -> None:
